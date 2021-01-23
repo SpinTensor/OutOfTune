@@ -1,9 +1,14 @@
 bin_PROGRAMS = outoftune
 
-outoftune_SOURCES = gdc.c \
-		    lcm.c \
-		    int_pow.c \
-		    fractions.c
-outoftune_CFLAGS = 
-outoftune_LDFLAGS =
+noinst_LTLIBRARIES = libfrac.la
 
+outoftune_SOURCES = outoftune.c
+outoftune_CFLAGS = -O3
+outoftune_LDFLAGS =
+outoftune_LDADD = libfrac.la
+
+libfrac_la_SOURCES = gdc.c \
+		     lcm.c \
+		     int_pow.c \
+		     fractions.c
+libfrac_la_CFLAGS = -O3
