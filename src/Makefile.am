@@ -1,6 +1,7 @@
 bin_PROGRAMS = outoftune
 
-outoftune_SOURCES = gdc.c
+outoftune_SOURCES = gdc.c \
+		    lcm.c 
 outoftune_CFLAGS = 
 outoftune_LDFLAGS =
 
