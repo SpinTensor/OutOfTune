@@ -1,6 +1,6 @@
 #include <stdbool.h>
 
-#include "fraction_types.h"
+#include "frac_types.h"
 
 #include "gcd.h"
 #include "lcm.h"
