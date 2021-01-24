@@ -39,17 +39,35 @@ int main(int argc, char **argv) {
    printf("\n");
    printf("Checking %lld possible interval combinations\n", total_interval_lists(interval_list));
 
+   // store best metrics
+   frac_t best_freq_scale = interval_list_freq_scale(interval_list);
+   double best_freq_scale_diff = 1.0 - frac2decimal(best_freq_scale);
+   best_freq_scale_diff = (best_freq_scale_diff < 0) ? -best_freq_scale_diff : best_freq_scale_diff;
+
    // go through all 
    for (long long i=0; i<total_interval_lists(interval_list); i++) {
-      printf("%8lld:", i);
-      for (int iint=0; iint<nintervals; iint++) {
-         printf(" %2d", interval_list[iint].pow);
-      }
+      int halfstep_shift = interval_list_halfstep_shift(interval_list);
+      if (halfstep_shift == options.target_halfstep_shift) {
 
-      printf(" (shift = %d, scale = %lf)",
-             interval_list_halfstep_shift(interval_list),
-             frac2decimal(interval_list_freq_scale(interval_list)));
-      printf("\n");
+         frac_t freq_scale = interval_list_freq_scale(interval_list);
+         double freq_scale_diff = 1.0 - frac2decimal(freq_scale);
+         freq_scale_diff = (freq_scale_diff < 0) ? -freq_scale_diff : freq_scale_diff;
+
+         if (freq_scale_diff <= best_freq_scale_diff) {
+            best_freq_scale_diff = freq_scale_diff;
+            best_freq_scale = freq_scale;
+
+            printf("%16lld:", i);
+            for (int iint=0; iint<nintervals; iint++) {
+               printf(" %4d", interval_list[iint].pow);
+            }
+
+            printf(" (shift = %d, scale = %lf)",
+                   halfstep_shift,
+                   frac2decimal(freq_scale));
+            printf("\n");
+         }
+      }
       next_interval_list(interval_list);
    }
 
