@@ -82,6 +82,14 @@ frac_t frac_div(frac_t a, frac_t b) {
 // a ^ b
 frac_t frac_pow(frac_t a, int b) {
    a = frac_simplify(a);
+   // invert fraction for negative exponents
+   if (b < 0) {
+      b *= -1;
+      long long tmplld;
+      tmplld = a.num;
+      a.num = a.denom;
+      a.denom = tmplld;
+   }
    a.num = ll_pow(a.num, b);
    a.denom = ll_pow(a.denom, b);
    return a;
