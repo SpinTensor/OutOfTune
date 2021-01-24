@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "cmd_options.h"
+#include "fractions.h"
 #include "intervals.h"
 #include "interval_list_properties.h"
 
@@ -45,7 +46,9 @@ int main(int argc, char **argv) {
          printf(" %2d", interval_list[iint].pow);
       }
 
-      printf(" (shift = %d, scale = %f)", interval_list_halfstep_shift(interval_list), 1.0);
+      printf(" (shift = %d, scale = %lf)",
+             interval_list_halfstep_shift(interval_list),
+             frac2decimal(interval_list_freq_scale(interval_list)));
       printf("\n");
       next_interval_list(interval_list);
    }
