@@ -39,4 +39,7 @@ frac_t frac_div(frac_t a, frac_t b) ;
 // a ^ b
 frac_t frac_pow(frac_t a, int b);
 
+// converts to decimal double
+double frac2decimal(frac_t a);
+
 #endif

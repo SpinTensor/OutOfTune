@@ -86,3 +86,8 @@ frac_t frac_pow(frac_t a, int b) {
    a.denom = ll_pow(a.denom, b);
    return a;
 }
+
+// converts to decimal double
+double frac2decimal(frac_t a) {
+   return ((double) a.num) / ((double) a.denom);
+}
