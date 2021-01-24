@@ -35,7 +35,7 @@ interval_t *new_interval_list(cmd_options_t options) {
    interval_list[3].ID = m3;
    interval_list[3].ht_steps = 3;
    interval_list[3].freqscale = frac_new(6, 5);
-   interval_list[3].maxpow = options.nm2;
+   interval_list[3].maxpow = options.nm3;
    interval_list[3].pow = -interval_list[3].maxpow;
 
    interval_list[4].name = "major third";
