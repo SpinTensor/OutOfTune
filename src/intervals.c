@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "interval_types.h"
 #include "cmd_opt_types.h"
@@ -95,6 +96,45 @@ interval_t *new_interval_list(cmd_options_t options) {
    interval_list[11].pow = -interval_list[11].maxpow;
 
    return interval_list;
+}
+
+long long total_interval_lists(interval_t *interval_list) {
+   long long product = 1;
+   for (int iinterval=0; iinterval<nintervals; iinterval++) {
+      product *= 2*interval_list[iinterval].maxpow + 1;
+   }
+   return product;
+}
+
+void next_interval_list(interval_t *interval_list) {
+   // search for the first interval entry which is supposed to be varied
+   int idx = 0;
+   while (interval_list[idx].maxpow == 0 && idx < nintervals) {
+      idx++;
+   }
+
+   // increment the interval counter and carry if required
+   bool carry = false;
+   if (interval_list[idx].pow == interval_list[idx].maxpow) {
+      carry = true;
+      interval_list[idx].pow = -interval_list[idx].maxpow;
+   } else {
+      interval_list[idx].pow += 1;
+   }
+
+   // carry
+   idx++;
+   while (carry && idx < nintervals) {
+      if (interval_list[idx].maxpow != 0) {
+         if (interval_list[idx].pow == interval_list[idx].maxpow) {
+            interval_list[idx].pow = -interval_list[idx].maxpow;
+         } else {
+            interval_list[idx].pow += 1;
+            carry = false;
+         }
+      }
+      idx++;
+   }
 }
 
 void free_interval_list(interval_t **interval_list_ptr) {

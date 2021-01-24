@@ -32,13 +32,23 @@ int main(int argc, char **argv) {
    }
    printf("   target_frequency_scale = %lf\n", options.target_frequency_scale); // target frequency scale to be reached after sequence
    printf("   target_halfstep_shift = %d\n", options.target_halfstep_shift); // target half step shift to be reached after sequence
+   interval_t *interval_list = new_interval_list(options);
 
-   interval_t *intervallist = new_interval_list(options);
+   printf("\n");
+   printf("Checking %lld possible interval combinations\n", total_interval_lists(interval_list));
 
+   // go through all 
+   for (long long i=0; i<total_interval_lists(interval_list)+3; i++) {
+      ;
+//      printf("%8lld:", i);
+//      for (int iint=0; iint<nintervals; iint++) {
+//         printf(" %2d", interval_list[iint].pow);
+//      }
+//      printf("\n");
+      next_interval_list(interval_list);
+   }
 
-
-
-   free_interval_list(&intervallist);
+   free_interval_list(&interval_list);
    free_cmd_options(&options);
    return 0;
 }
