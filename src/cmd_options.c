@@ -194,8 +194,27 @@ static error_t parse_cmd_options(int key, char *arg, struct argp_state *state) {
          options->nP8 = atoi(arg);
          break;
       // other options
-      case avoidhsteps_ID:
-         // TODO
+      case avoidhsteps_ID:;
+         // first count the elements
+         char *delimstr = ",";
+         char *tmpstr = strdup(arg);
+         char *token = strtok(tmpstr, delimstr);
+         options->navoidhsteps = 0;
+         while (token != NULL) {
+            token = strtok(NULL, delimstr);
+            options->navoidhsteps += 1;
+         }
+         // get the numbers
+         options->avoidhsteps = (int*) malloc(options->navoidhsteps*sizeof(int));
+         strcpy(tmpstr, arg);
+         token = strtok(tmpstr, delimstr);
+         int i=0;
+         while (token != NULL) {
+            options->avoidhsteps[i] = atoi(token);
+            token = strtok(NULL, delimstr);
+            i++;
+         }
+         free(tmpstr);
          break;
       case maxhstepsdown_ID:
          options->maxhstepsdown = atoi(arg);
@@ -210,7 +229,7 @@ static error_t parse_cmd_options(int key, char *arg, struct argp_state *state) {
          options->target_frequency_scale = atof(arg);
          break;
       case startingNote_ID:
-         options->startingNote = strdup(arg);
+         options->startingNote = arg;
          break;
       case ARGP_KEY_ARG:
          if (state->arg_num > 0) {
@@ -261,4 +280,9 @@ cmd_options_t parse_command_line_options(int argc, char **argv) {
 
    return options;
 
+}
+
+void free_cmd_options(cmd_options_t *options) {
+   free(options->avoidhsteps);
+   options->avoidhsteps = NULL;
 }

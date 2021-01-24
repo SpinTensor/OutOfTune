@@ -6,4 +6,6 @@
 // easy interface to command line option parsing
 cmd_options_t parse_command_line_options(int argc, char **argv);
 
+void free_cmd_options(cmd_options_t *options);
+
 #endif
