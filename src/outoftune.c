@@ -3,6 +3,7 @@
 
 #include "cmd_options.h"
 #include "intervals.h"
+#include "interval_list_properties.h"
 
 int main(int argc, char **argv) {
    (void) argc;
@@ -38,13 +39,14 @@ int main(int argc, char **argv) {
    printf("Checking %lld possible interval combinations\n", total_interval_lists(interval_list));
 
    // go through all 
-   for (long long i=0; i<total_interval_lists(interval_list)+3; i++) {
-      ;
-//      printf("%8lld:", i);
-//      for (int iint=0; iint<nintervals; iint++) {
-//         printf(" %2d", interval_list[iint].pow);
-//      }
-//      printf("\n");
+   for (long long i=0; i<total_interval_lists(interval_list); i++) {
+      printf("%8lld:", i);
+      for (int iint=0; iint<nintervals; iint++) {
+         printf(" %2d", interval_list[iint].pow);
+      }
+
+      printf(" (shift = %d, scale = %f)", interval_list_halfstep_shift(interval_list), 1.0);
+      printf("\n");
       next_interval_list(interval_list);
    }
 
