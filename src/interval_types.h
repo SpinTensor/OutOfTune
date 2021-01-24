@@ -1,7 +1,7 @@
 #ifndef INTERVAL_TYPES_H
 #define INTERVAL_TYPES_H
 
-#include "fraction_types.h"
+#include "frac_types.h"
 
 enum interval_ID_e {
    P1,
@@ -23,5 +23,7 @@ typedef struct {
    int maxpow;
    int pow;
 } interval_t;
+
+extern const int nintervals;
 
 #endif

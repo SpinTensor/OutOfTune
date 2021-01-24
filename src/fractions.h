@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-#include "fraction_types.h"
+#include "frac_types.h"
 
 frac_t frac_new(long long num, long long denom);
 

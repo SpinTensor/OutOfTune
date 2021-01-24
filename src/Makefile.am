@@ -3,7 +3,8 @@ bin_PROGRAMS = outoftune
 noinst_LTLIBRARIES = libfrac.la \
 		     libcmd_opt.la
 
-outoftune_SOURCES = outoftune.c
+outoftune_SOURCES = outoftune.c \
+		    intervals.c
 outoftune_CFLAGS = -O3
 outoftune_LDFLAGS =
 outoftune_LDADD = libfrac.la \
