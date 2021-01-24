@@ -1,5 +1,7 @@
 #include <stdlib.h>
+#include <stdio.h>
 
+#include <string.h>
 #include <limits.h>
 #include <argp.h>
 
@@ -125,9 +127,9 @@ static struct argp_option possible_options[] = {
    }, {
       "avoid-hsteps",
       avoidhsteps_ID,
-      "n m",
+      "n,m",
       0,
-      "list of halfsteps to avoid in the sequence generation",
+      "komma separated list of halfsteps to avoid in the sequence generation",
       0
    }, {
       "target-freq-scale",
@@ -154,13 +156,69 @@ static error_t parse_cmd_options(int key, char *arg, struct argp_state *state) {
    cmd_options_t *options = state->input;
 
    switch (key) {
+      // Intervall amounts
       case nP1_ID:
          options->nP1 = atoi(arg);
-         printf("%s\n", arg);
+         break;
+      case nm2_ID:
+         options->nm2 = atoi(arg);
+         break;
+      case nM2_ID:
+         options->nM2 = atoi(arg);
+         break;
+      case nm3_ID:
+         options->nm3 = atoi(arg);
+         break;
+      case nM3_ID:
+         options->nM3 = atoi(arg);
+         break;
+      case nP4_ID:
+         options->nP4 = atoi(arg);
+         break;
+      case nP5_ID:
+         options->nP5 = atoi(arg);
+         break;
+      case nm6_ID:
+         options->nm6 = atoi(arg);
+         break;
+      case nM6_ID:
+         options->nM6 = atoi(arg);
+         break;
+      case nm7_ID:
+         options->nm7 = atoi(arg);
+         break;
+      case nM7_ID:
+         options->nM7 = atoi(arg);
+         break;
+      case nP8_ID:
+         options->nP8 = atoi(arg);
+         break;
+      // other options
+      case avoidhsteps_ID:
+         // TODO
+         break;
+      case maxhstepsdown_ID:
+         options->maxhstepsdown = atoi(arg);
+         break;
+      case maxhstepsup_ID:
+         options->maxhstepsup = atoi(arg);
+         break;
+      case target_halfstep_shift_ID:
+         options->target_halfstep_shift = atoi(arg);
+         break;
+      case target_frequency_scale_ID:
+         options->target_frequency_scale = atof(arg);
+         break;
+      case startingNote_ID:
+         options->startingNote = strdup(arg);
          break;
       case ARGP_KEY_ARG:
-
+         if (state->arg_num > 0) {
+            argp_usage(state);
+         }
+         break;
       default:
+         return ARGP_ERR_UNKNOWN;
          break;
    }
 

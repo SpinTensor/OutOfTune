@@ -20,13 +20,13 @@ int main(int argc, char **argv) {
    printf("nm7 = %d\n", options.nm7); // number of minor sevenths
    printf("nM7 = %d\n", options.nM7); // number of major sevenths
    printf("nP8 = %d\n", options.nP8); // number of perfect octaves
-   //printf("startingNote = %s\n", ; // note on which to start the sequence
-   //printf("maxhstepsdown; // allowed number of halfsteps down from the starting note
-   //printf("maxhstepsup; // allowed number of halfsteps up from the starting note
+   printf("startingNote = %s\n", options.startingNote); // note on which to start the sequence
+   printf("maxhstepsdown = %d\n", options.maxhstepsdown); // allowed number of halfsteps down from the starting note
+   printf("maxhstepsup = %d\n", options.maxhstepsup); // allowed number of halfsteps up from the starting note
    //printf("navoidhsteps; // number of halfsteps to avoid in sequence generation
    //printf("avoidhsteps; // halfsteps to avoid in sequence generation
-   //printf("target_frequency_scale; // target frequency scale to be reached after sequence
-   //printf("target_halfstep_shift; // target half step shift to be reached after sequence
+   printf("target_frequency_scale = %lf\n", options.target_frequency_scale); // target frequency scale to be reached after sequence
+   printf("target_halfstep_shift = %d\n", options.target_halfstep_shift); // target half step shift to be reached after sequence
 
    return 0;
 }
