@@ -62,9 +62,10 @@ int main(int argc, char **argv) {
                printf(" %4d", interval_list[iint].pow);
             }
 
-            printf(" (shift = %d, scale = %lf)",
+            printf(" (shift = %d, scale = %lf (%le))",
                    halfstep_shift,
-                   frac2decimal(freq_scale));
+                   frac2decimal(freq_scale),
+                   freq_scale_diff);
             printf("\n");
          }
       }
