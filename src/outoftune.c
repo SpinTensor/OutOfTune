@@ -70,17 +70,25 @@ int main(int argc, char **argv) {
                    halfstep_shift,
                    frac2decimal(freq_scale),
                    freq_scale_diff);
-            printf("\n");
 
             store_sequence(freq_scale,
                            freq_scale_diff,
                            halfstep_shift,
                            interval_list,
                            &sequence);
+
             for (int i=0; i<sequence.sequence_length; i++) {
-               printf(" %2d", sequence.sequence[i]);
+               if (i%12 == 0) {
+                  printf("\n                 ");
+               }
+               printf(" %4d", sequence.sequence[i]);
             }
             printf("\n");
+            printf("                  ");
+            printf("maxhstepsup = %d, maxhstepsdown = %d, avoidviolations = %d\n",
+                   sequence.maxhstepsup,
+                   sequence.maxhstepsdown,
+                   sequence.avoidviolations);
 
          }
       }
