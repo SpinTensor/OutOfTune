@@ -108,7 +108,7 @@ static struct argp_option possible_options[] = {
       startingNote_ID,
       "note",
       0,
-      "Note to start the sequence on .e.g. \"cis\"",
+      "Note to start the sequence on .e.g. \"C#\"",
       0
    }, {
       "max-hstep-up",
