@@ -5,6 +5,7 @@
 #include "fractions.h"
 #include "intervals.h"
 #include "interval_list_properties.h"
+#include "sequences.h"
 
 int main(int argc, char **argv) {
    (void) argc;
@@ -39,6 +40,9 @@ int main(int argc, char **argv) {
    printf("\n");
    printf("Checking %lld possible interval combinations\n", total_interval_lists(interval_list));
 
+   sequence_t sequence = new_sequence(options);
+
+
    // store best metrics
    frac_t best_freq_scale = interval_list_freq_scale(interval_list);
    double best_freq_scale_diff = 1.0 - frac2decimal(best_freq_scale);
@@ -67,6 +71,17 @@ int main(int argc, char **argv) {
                    frac2decimal(freq_scale),
                    freq_scale_diff);
             printf("\n");
+
+            store_sequence(freq_scale,
+                           freq_scale_diff,
+                           halfstep_shift,
+                           interval_list,
+                           &sequence);
+            for (int i=0; i<sequence.sequence_length; i++) {
+               printf(" %2d", sequence.sequence[i]);
+            }
+            printf("\n");
+
          }
       }
       next_interval_list(interval_list);

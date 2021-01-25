@@ -2,12 +2,14 @@ bin_PROGRAMS = outoftune
 
 noinst_LTLIBRARIES = libfrac.la \
 		     libcmd_opt.la \
-		     libinterval.la
+		     libinterval.la \
+		     libsequence.la
 
 outoftune_SOURCES = outoftune.c
 outoftune_CFLAGS = -O3
 outoftune_LDFLAGS =
-outoftune_LDADD = libinterval.la \
+outoftune_LDADD = libsequence.la \
+		  libinterval.la \
 		  libfrac.la \
 		  libcmd_opt.la
 
@@ -23,3 +25,6 @@ libcmd_opt_la_CFLAGS = -O3
 libinterval_la_SOURCES = intervals.c \
 			 interval_list_properties.c
 libinterval_la_CFLAGS = -O3
+
+libsequence_la_SOURCES = sequences.c
+libsequence_la_CFLAGS = -O3
