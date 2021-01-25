@@ -87,6 +87,7 @@ int main(int argc, char **argv) {
       next_interval_list(interval_list);
    }
 
+   free_sequence(sequence);
    free_interval_list(&interval_list);
    free_cmd_options(&options);
    return 0;
