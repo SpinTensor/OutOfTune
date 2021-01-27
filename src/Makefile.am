@@ -1,6 +1,7 @@
 bin_PROGRAMS = outoftune
 
-noinst_LTLIBRARIES = libfrac.la \
+noinst_LTLIBRARIES = librandom.la \
+		     libfrac.la \
 		     libcmd_opt.la \
 		     libinterval.la \
 		     libsequence.la
@@ -11,7 +12,11 @@ outoftune_LDFLAGS =
 outoftune_LDADD = libsequence.la \
 		  libinterval.la \
 		  libfrac.la \
+		  librandom.la \
 		  libcmd_opt.la
+
+librandom_la_SOURCES = random.c
+librandom_la_CFLAGS = -O3
 
 libfrac_la_SOURCES = gcd.c \
 		     lcm.c \
