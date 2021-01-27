@@ -33,5 +33,6 @@ libinterval_la_SOURCES = intervals.c \
 libinterval_la_CFLAGS = -O3
 
 libsequence_la_SOURCES = sequences.c \
-			 sequence_properties.c
+			 sequence_properties.c \
+			 opt_sequence.c
 libsequence_la_CFLAGS = -O3

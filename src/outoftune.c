@@ -6,7 +6,7 @@
 #include "intervals.h"
 #include "interval_list_properties.h"
 #include "sequences.h"
-#include "sequence_properties.h"
+#include "opt_sequence.h"
 
 int main(int argc, char **argv) {
    (void) argc;
@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
                            interval_list,
                            &sequence);
 
-            sequence_properties(&sequence, options);
+            optimize_sequence(&sequence, options);
 
             for (int i=0; i<sequence.sequence_length; i++) {
                if (i%12 == 0) {
