@@ -36,6 +36,7 @@ int main(int argc, char **argv) {
    }
    printf("   target_frequency_scale = %lf\n", options.target_frequency_scale); // target frequency scale to be reached after sequence
    printf("   target_halfstep_shift = %d\n", options.target_halfstep_shift); // target half step shift to be reached after sequence
+   printf("   nseq_opt_steps = %lld\n", options.nsequence_opt_steps); // number of optimization steps for sequence optimization
    interval_t *interval_list = new_interval_list(options);
 
    printf("\n");

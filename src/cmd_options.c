@@ -146,6 +146,13 @@ static struct argp_option possible_options[] = {
       "number of halfsteps to be off relative to starting note after sequence",
       0
    }, {
+      "nseq_opt_steps",
+      nsequence_opt_steps_ID,
+      "n",
+      0,
+      "number of steps trying to optimize the resulting sequence",
+      0
+   }, {
       0, 0, 0, 0, 0, 0}
 };
 
@@ -230,6 +237,9 @@ static error_t parse_cmd_options(int key, char *arg, struct argp_state *state) {
          break;
       case startingNote_ID:
          options->startingNote = arg;
+         break;
+      case nsequence_opt_steps_ID:
+         options->nsequence_opt_steps = atoi(arg);
          break;
       case ARGP_KEY_ARG:
          if (state->arg_num > 0) {

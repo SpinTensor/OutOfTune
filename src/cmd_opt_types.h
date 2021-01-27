@@ -23,6 +23,7 @@ typedef struct {
    int *avoidhsteps; // halfsteps to avoid in sequence generation
    double target_frequency_scale; // target frequency scale to be reached after sequence
    int target_halfstep_shift; // target half step shift to be reached after sequence
+   long long nsequence_opt_steps; // number of steps to attempt to optimize sequence
 } cmd_options_t;
 
 enum cmd_opt_IDs {
@@ -44,7 +45,8 @@ enum cmd_opt_IDs {
    navoidhsteps_ID, // number of halfsteps to avoid in sequence generation
    avoidhsteps_ID, // halfsteps to avoid in sequence generation
    target_frequency_scale_ID, // target frequency scale to be reached after sequence
-   target_halfstep_shift_ID // target half step shift to be reached after sequence
+   target_halfstep_shift_ID, // target half step shift to be reached after sequence
+   nsequence_opt_steps_ID // number of steps to attempt to optimize sequence
 };
 
 #endif
