@@ -21,7 +21,8 @@ librandom_la_CFLAGS = -O3
 libfrac_la_SOURCES = gcd.c \
 		     lcm.c \
 		     int_pow.c \
-		     fractions.c
+		     fractions.c \
+		     permutations.c
 libfrac_la_CFLAGS = -O3
 
 libcmd_opt_la_SOURCES = cmd_options.c
