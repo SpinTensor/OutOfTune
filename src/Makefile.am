@@ -8,7 +8,7 @@ noinst_LTLIBRARIES = librandom.la \
 
 outoftune_SOURCES = outoftune.c
 outoftune_CFLAGS = -O3
-outoftune_LDFLAGS =
+outoftune_LDFLAGS = -lm
 outoftune_LDADD = libsequence.la \
 		  libinterval.la \
 		  libfrac.la \
