@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 #include "cmd_options.h"
 #include "fractions.h"
@@ -63,16 +64,6 @@ int main(int argc, char **argv) {
             best_freq_scale_diff = freq_scale_diff;
             best_freq_scale = freq_scale;
 
-            printf("%16lld:", i);
-            for (int iint=0; iint<nintervals; iint++) {
-               printf(" %4d", interval_list[iint].pow);
-            }
-
-            printf(" (shift = %d, scale = %lf (%le))",
-                   halfstep_shift,
-                   frac2decimal(freq_scale),
-                   freq_scale_diff);
-
             store_sequence(freq_scale,
                            freq_scale_diff,
                            halfstep_shift,
@@ -81,18 +72,31 @@ int main(int argc, char **argv) {
 
             optimize_sequence(&sequence, options);
 
-            for (int i=0; i<sequence.sequence_length; i++) {
-               if (i%12 == 0) {
-                  printf("\n                 ");
+            if (sequence.score == 0) {
+
+               printf("%16lld:", i);
+               for (int iint=0; iint<nintervals; iint++) {
+                  printf(" %4d", interval_list[iint].pow);
                }
-               printf(" %4d", sequence.sequence[i]);
+
+               printf(" (shift = %d, scale = %lf (%lf cents)",
+                      halfstep_shift,
+                      frac2decimal(freq_scale),
+                      1200.0 * log(frac2decimal(freq_scale))/ log(2.0));
+
+               for (int i=0; i<sequence.sequence_length; i++) {
+                  if (i%12 == 0) {
+                     printf("\n                 ");
+                  }
+                  printf(" %4d", sequence.sequence[i]);
+               }
+               printf("\n                  ");
+               printf("maxhstepsup = %d, maxhstepsdown = %d, avoidviolations = %d, score = %d\n\n",
+                      sequence.maxhstepsup,
+                      sequence.maxhstepsdown,
+                      sequence.avoidviolations,
+                      sequence.score);
             }
-            printf("\n");
-            printf("                  ");
-            printf("maxhstepsup = %d, maxhstepsdown = %d, avoidviolations = %d\n",
-                   sequence.maxhstepsup,
-                   sequence.maxhstepsdown,
-                   sequence.avoidviolations);
 
          }
       }
