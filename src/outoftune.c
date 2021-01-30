@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
+
+#include <string.h>
 #include <math.h>
 
 #include "cmd_options.h"
@@ -72,6 +74,8 @@ int main(int argc, char **argv) {
 
             optimize_sequence(&sequence, options);
 
+            generate_note_sequence(&sequence, options);
+
             if (sequence.score == 0) {
 
                printf("%16lld:", i);
@@ -90,6 +94,17 @@ int main(int argc, char **argv) {
                   }
                   printf(" %4d", sequence.interval_sequence[i]);
                }
+
+               for (int i=0; i<sequence.sequence_length+1; i++) {
+                  if (i%8 == 0) {
+                     printf("\n                 ");
+                  }
+                  printf(" %s", sequence.note_sequence[i].name);
+                  if (strlen(sequence.note_sequence[i].name) == 1) {
+                     printf(" ");
+                  }
+                  printf("(%2d) ", sequence.note_sequence[i].octave);
+               }
                printf("\n                  ");
                printf("maxhstepsup = %d, maxhstepsdown = %d, avoidviolations = %d, score = %d\n\n",
                       sequence.maxhstepsup,
@@ -97,7 +112,6 @@ int main(int argc, char **argv) {
                       sequence.avoidviolations,
                       sequence.score);
             }
-
          }
       }
       next_interval_list(interval_list);

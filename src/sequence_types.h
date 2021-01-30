@@ -4,6 +4,11 @@
 #include "frac_types.h"
 
 typedef struct {
+   char *name;
+   int octave;
+} note_t;
+
+typedef struct {
    int nintervalpows;
    int *intervalpows;
    frac_t freq_scale;
@@ -11,6 +16,7 @@ typedef struct {
    int halfstep_shift;
    int sequence_length;
    int *interval_sequence;
+   note_t *note_sequence;
    int maxhstepsup;
    int maxhstepsdown;
    int avoidviolations;

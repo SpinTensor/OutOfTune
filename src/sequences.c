@@ -1,5 +1,7 @@
 #include <stdlib.h>
 
+#include <string.h>
+
 #include "cmd_opt_types.h"
 #include "sequence_types.h"
 #include "interval_types.h"
@@ -21,6 +23,7 @@ sequence_t new_sequence(cmd_options_t options) {
    sequence.sequence_length += options.nP8;
 
    sequence.interval_sequence = (int*) malloc(sequence.sequence_length * sizeof(int));
+   sequence.note_sequence = (note_t*) malloc((sequence.sequence_length+1)*sizeof(note_t));
 
    return sequence;
 }
@@ -44,7 +47,40 @@ void store_sequence(frac_t freq_scale, double freq_scale_diff, int halfstep_shif
    }
 }
 
+void generate_note_sequence(sequence_t *sequence_ptr, cmd_options_t options) {
+#define NNOTES 12
+   char *note_name_list[NNOTES] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
+
+   int octave = 0;
+   int cur_note_idx = -1;
+   for (int inote=0; inote<NNOTES; inote++) {
+      if (strcmp(options.startingNote, note_name_list[inote]) == 0) {
+         cur_note_idx = inote;
+         break;
+      }
+   }
+
+   sequence_ptr->note_sequence[0].name = note_name_list[cur_note_idx];
+   sequence_ptr->note_sequence[0].octave = octave;
+
+   for (int i=0; i<sequence_ptr->sequence_length; i++) {
+      cur_note_idx += sequence_ptr->interval_sequence[i];
+      while (cur_note_idx >= NNOTES) {
+         cur_note_idx -= NNOTES;
+         octave ++;
+      }
+      while (cur_note_idx < 0) {
+         cur_note_idx += NNOTES;
+         octave --;
+      }
+      sequence_ptr->note_sequence[i+1].name = note_name_list[cur_note_idx];
+      sequence_ptr->note_sequence[i+1].octave = octave;
+   }
+#undef NNOTES
+}
+
 void free_sequence(sequence_t sequence) {
    free(sequence.intervalpows);
    free(sequence.interval_sequence);
+   free(sequence.note_sequence);
 }
