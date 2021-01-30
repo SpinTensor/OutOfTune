@@ -237,6 +237,23 @@ static error_t parse_cmd_options(int key, char *arg, struct argp_state *state) {
          break;
       case startingNote_ID:
          options->startingNote = arg;
+         for (size_t i=0; i<strlen(options->startingNote); i++) {
+            options->startingNote[i] = (char) toupper(options->startingNote[i]);
+         }
+         // check for note name consistency
+         #define NNOTES 12
+            const char *note_name_list[NNOTES] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
+            int cur_note_idx = -1;
+            for (int inote=0; inote<NNOTES; inote++) {
+               if (strcmp(options->startingNote, note_name_list[inote]) == 0) {
+                  cur_note_idx = inote;
+                  break;
+               }
+            }
+            if (cur_note_idx == -1) {
+               printf("Invalid Starting note %s\n", options->startingNote);
+               abort();
+            }
          break;
       case nsequence_opt_steps_ID:
          options->nsequence_opt_steps = atoi(arg);
