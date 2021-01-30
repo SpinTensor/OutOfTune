@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include <limits.h>
 #include <string.h>
 #include <math.h>
 
@@ -49,8 +50,7 @@ int main(int argc, char **argv) {
    sequence_t sequence = new_sequence(options);
 
    // store best metrics
-   frac_t best_freq_scale = interval_list_freq_scale(interval_list);
-   double best_freq_scale_diff = 1.0 - frac2decimal(best_freq_scale);
+   double best_freq_scale_diff = INT_MAX;
    best_freq_scale_diff = (best_freq_scale_diff < 0) ? -best_freq_scale_diff : best_freq_scale_diff;
 
    // go through all 
@@ -59,12 +59,11 @@ int main(int argc, char **argv) {
       if (halfstep_shift == options.target_halfstep_shift) {
 
          frac_t freq_scale = interval_list_freq_scale(interval_list);
-         double freq_scale_diff = 1.0 - frac2decimal(freq_scale);
+         double freq_scale_diff = options.target_frequency_scale - frac2decimal(freq_scale);
          freq_scale_diff = (freq_scale_diff < 0) ? -freq_scale_diff : freq_scale_diff;
 
          if (freq_scale_diff <= best_freq_scale_diff) {
             best_freq_scale_diff = freq_scale_diff;
-            best_freq_scale = freq_scale;
 
             store_sequence(freq_scale,
                            freq_scale_diff,
@@ -83,7 +82,7 @@ int main(int argc, char **argv) {
                   printf(" %4d", interval_list[iint].pow);
                }
 
-               printf(" (shift = %d, scale = %lf (%lf cents)",
+               printf(" (shift = %d, scale = %le (%le cents)",
                       halfstep_shift,
                       frac2decimal(freq_scale),
                       1200.0 * log(frac2decimal(freq_scale))/ log(2.0));
