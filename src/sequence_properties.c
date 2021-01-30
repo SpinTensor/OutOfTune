@@ -8,7 +8,7 @@ void sequence_properties(sequence_t *sequence, cmd_options_t options,
    *maxhstepsdown = 0;
    *avoidviolations = 0;
    for (int i=0; i<sequence->sequence_length; i++) {
-      sum += sequence->sequence[i];
+      sum += sequence->interval_sequence[i];
       if (sum > *maxhstepsup) {
          *maxhstepsup = sum;
       } else if (sum < -(*maxhstepsdown)) {

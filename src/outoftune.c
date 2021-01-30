@@ -88,7 +88,7 @@ int main(int argc, char **argv) {
                   if (i%12 == 0) {
                      printf("\n                 ");
                   }
-                  printf(" %4d", sequence.sequence[i]);
+                  printf(" %4d", sequence.interval_sequence[i]);
                }
                printf("\n                  ");
                printf("maxhstepsup = %d, maxhstepsdown = %d, avoidviolations = %d, score = %d\n\n",

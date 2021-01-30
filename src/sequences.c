@@ -20,7 +20,7 @@ sequence_t new_sequence(cmd_options_t options) {
    sequence.sequence_length += options.nM7;
    sequence.sequence_length += options.nP8;
 
-   sequence.sequence = (int*) malloc(sequence.sequence_length * sizeof(int));
+   sequence.interval_sequence = (int*) malloc(sequence.sequence_length * sizeof(int));
 
    return sequence;
 }
@@ -34,11 +34,11 @@ void store_sequence(frac_t freq_scale, double freq_scale_diff, int halfstep_shif
    for (int i=0; i<nintervals; i++ ){
       sequence->intervalpows[i] = interval_list[i].pow;
       for (int j=0; j<sequence->intervalpows[i]; j++) {
-         sequence->sequence[sequence->sequence_length] = interval_list[i].ht_steps;
+         sequence->interval_sequence[sequence->sequence_length] = interval_list[i].ht_steps;
          sequence->sequence_length += 1;
       }
       for (int j=0; j>sequence->intervalpows[i]; j--) {
-         sequence->sequence[sequence->sequence_length] = -interval_list[i].ht_steps;
+         sequence->interval_sequence[sequence->sequence_length] = -interval_list[i].ht_steps;
          sequence->sequence_length += 1;
       }
    }
@@ -46,5 +46,5 @@ void store_sequence(frac_t freq_scale, double freq_scale_diff, int halfstep_shif
 
 void free_sequence(sequence_t sequence) {
    free(sequence.intervalpows);
-   free(sequence.sequence);
+   free(sequence.interval_sequence);
 }

@@ -10,7 +10,7 @@ typedef struct {
    double freq_scale_diff;
    int halfstep_shift;
    int sequence_length;
-   int *sequence;
+   int *interval_sequence;
    int maxhstepsup;
    int maxhstepsdown;
    int avoidviolations;

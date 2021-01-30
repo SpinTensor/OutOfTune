@@ -37,7 +37,7 @@ void optimize_sequence(sequence_t *sequence_ptr, cmd_options_t options) {
       while (j == i) {
          j = next_int_random(0, length-1);
       }
-      swap_elements(sequence_ptr->sequence, i, j);
+      swap_elements(sequence_ptr->interval_sequence, i, j);
 
       sequence_properties(sequence_ptr, options,
                           &tmpmaxhstepsup,
@@ -58,7 +58,7 @@ void optimize_sequence(sequence_t *sequence_ptr, cmd_options_t options) {
       } else {
          // reset sequence
          // swap back the elements
-         swap_elements(sequence_ptr->sequence, i, j);
+         swap_elements(sequence_ptr->interval_sequence, i, j);
       }
       if (oldscore == 0) {
          break;
