@@ -16,7 +16,7 @@ int compute_score(int maxhstepsup, int maxhstepsdown, int avoidviolations, cmd_o
 }
 
 void optimize_sequence(sequence_t *sequence_ptr, cmd_options_t options) {
-   //shuffle_list(sequence_ptr->sequence_length, sequence_ptr->sequence);
+   shuffle_list(sequence_ptr->sequence_length, sequence_ptr->interval_sequence);
    sequence_properties(sequence_ptr, options,
                        &(sequence_ptr->maxhstepsup),
                        &(sequence_ptr->maxhstepsdown),
