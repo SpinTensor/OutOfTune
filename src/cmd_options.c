@@ -108,7 +108,13 @@ static struct argp_option possible_options[] = {
       startingNote_ID,
       "note",
       0,
-      "Note to start the sequence on .e.g. \"C#\"",
+      "Note to start the sequence on e.g. \"C#\"",
+      0
+   }, {"starting-octave",
+      startingOctaveID,
+      "n",
+      0,
+      "Octave to start the sequence on e.g. \"3\"",
       0
    }, {
       "max-hstep-up",
@@ -255,6 +261,9 @@ static error_t parse_cmd_options(int key, char *arg, struct argp_state *state) {
                abort();
             }
          break;
+      case startingOctaveID:
+         options->startingOctave = atoi(arg);
+         break;
       case nsequence_opt_steps_ID:
          options->nsequence_opt_steps = atoi(arg);
          break;
@@ -295,6 +304,7 @@ cmd_options_t parse_command_line_options(int argc, char **argv) {
    options.nM7 = 0; // number of major sevenths
    options.nP8 = 0; // number of perfect octaves
    options.startingNote = NULL; // note on which to start the sequence
+   options.startingOctave = 3; // octave on which to start the sequence
    options.maxhstepsdown = INT_MAX; // allowed number of halfsteps down from the starting note
    options.maxhstepsup = INT_MAX; // allowed number of halfsteps up from the starting note
    options.navoidhsteps = 0; // number of halfsteps to avoid in sequence generation

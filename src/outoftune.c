@@ -31,6 +31,7 @@ int main(int argc, char **argv) {
    printf("   nM7 = %d\n", options.nM7); // number of major sevenths
    printf("   nP8 = %d\n", options.nP8); // number of perfect octaves
    printf("   startingNote = %s\n", options.startingNote); // note on which to start the sequence
+   printf("   startingOctave = %d\n", options.startingOctave); // octave in which to start the sequence
    printf("   maxhstepsdown = %d\n", options.maxhstepsdown); // allowed number of halfsteps down from the starting note
    printf("   maxhstepsup = %d\n", options.maxhstepsup); // allowed number of halfsteps up from the starting note
    printf("   navoidhsteps = %d\n", options.navoidhsteps); // number of halfsteps to avoid in sequence generation
@@ -46,7 +47,6 @@ int main(int argc, char **argv) {
    printf("Checking %lld possible interval combinations\n", total_interval_lists(interval_list));
 
    sequence_t sequence = new_sequence(options);
-
 
    // store best metrics
    frac_t best_freq_scale = interval_list_freq_scale(interval_list);

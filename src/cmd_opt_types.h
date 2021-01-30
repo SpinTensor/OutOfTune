@@ -17,6 +17,7 @@ typedef struct {
    int nM7; // number of major sevenths
    int nP8; // number of perfect octaves
    char *startingNote; // note on which to start the sequence
+   int startingOctave; // octave in which to start the sequence
    int maxhstepsdown; // allowed number of halfsteps down from the starting note
    int maxhstepsup; // allowed number of halfsteps up from the starting note
    int navoidhsteps; // number of halfsteps to avoid in sequence generation
@@ -40,6 +41,7 @@ enum cmd_opt_IDs {
    nM7_ID, // number of major sevenths
    nP8_ID, // number of perfect octaves
    startingNote_ID, // note on which to start the sequence
+   startingOctaveID, // octave in which to start the sequence
    maxhstepsdown_ID, // allowed number of halfsteps down from the starting note
    maxhstepsup_ID, // allowed number of halfsteps up from the starting note
    navoidhsteps_ID, // number of halfsteps to avoid in sequence generation

@@ -51,7 +51,7 @@ void generate_note_sequence(sequence_t *sequence_ptr, cmd_options_t options) {
 #define NNOTES 12
    char *note_name_list[NNOTES] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 
-   int octave = 0;
+   int octave = options.startingOctave;
    int cur_note_idx = -1;
    for (int inote=0; inote<NNOTES; inote++) {
       if (strcmp(options.startingNote, note_name_list[inote]) == 0) {
