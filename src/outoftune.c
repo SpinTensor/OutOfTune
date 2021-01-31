@@ -106,11 +106,12 @@ int main(int argc, char **argv) {
                      printf("(%2d) ", sequence.note_sequence[i].octave);
                   }
                   printf("\n                  ");
-                  printf("maxhstepsup = %d, maxhstepsdown = %d, avoidviolations = %d, score = %d\n\n",
+                  printf("maxhstepsup = %d, maxhstepsdown = %d, avoidviolations = %d, score = %d, length = %d\n\n",
                          sequence.maxhstepsup,
                          sequence.maxhstepsdown,
                          sequence.avoidviolations,
-                         sequence.score);
+                         sequence.score,
+                         sequence.sequence_length);
                }
             }
          }
