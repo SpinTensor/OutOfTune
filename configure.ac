@@ -10,6 +10,8 @@ AC_LANG(C)
 AM_PROG_AR
 LT_INIT
 
+AX_GMP_LIBRARY
+
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([src/Makefile])
 
