@@ -7,7 +7,7 @@
 
 frac_t frac_new(long long num, long long denom);
 
-frac_t frac_simplyfy(frac_t a);
+frac_t frac_simplify(frac_t a);
 
 // is a == b ?
 bool frac_cmp_eq(frac_t a, frac_t b);
