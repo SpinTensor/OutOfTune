@@ -4,9 +4,9 @@
 #include <limits.h>
 #include <string.h>
 #include <math.h>
+#include <gmp.h>
 
 #include "cmd_options.h"
-#include "fractions.h"
 #include "intervals.h"
 #include "interval_list_properties.h"
 #include "sequences.h"
@@ -43,6 +43,7 @@ int main(int argc, char **argv) {
    printf("   target_halfstep_shift = %d\n", options.target_halfstep_shift); // target half step shift to be reached after sequence
    printf("   nseq_opt_steps = %lld\n", options.nsequence_opt_steps); // number of optimization steps for sequence optimization
    interval_t *interval_list = new_interval_list(options);
+   mpq_t freq_scale;
 
    printf("\n");
    printf("Checking %lld possible interval combinations\n", total_interval_lists(interval_list));
@@ -58,8 +59,8 @@ int main(int argc, char **argv) {
       int halfstep_shift = interval_list_halfstep_shift(interval_list);
       if (halfstep_shift == options.target_halfstep_shift) {
 
-         frac_t freq_scale = interval_list_freq_scale(interval_list);
-         double freq_scale_diff = options.target_frequency_scale - frac2decimal(freq_scale);
+         interval_list_freq_scale(interval_list, &freq_scale);
+         double freq_scale_diff = options.target_frequency_scale - mpq_get_d(freq_scale);
          freq_scale_diff = (freq_scale_diff < 0) ? -freq_scale_diff : freq_scale_diff;
 
          if (freq_scale_diff <= best_freq_scale_diff) {
@@ -84,8 +85,8 @@ int main(int argc, char **argv) {
 
                printf(" (shift = %d, scale = %le (%le cents)",
                       halfstep_shift,
-                      frac2decimal(freq_scale),
-                      1200.0 * log(frac2decimal(freq_scale))/ log(2.0));
+                      mpq_get_d(freq_scale),
+                      1200.0 * log(mpq_get_d(freq_scale))/ log(2.0));
 
                for (int i=0; i<sequence.sequence_length; i++) {
                   if (i%12 == 0) {
@@ -116,6 +117,7 @@ int main(int argc, char **argv) {
       next_interval_list(interval_list);
    }
 
+   mpq_clear(freq_scale);
    free_sequence(sequence);
    free_interval_list(&interval_list);
    free_cmd_options(&options);

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
 #include <string.h>
+#include <gmp.h>
 
 #include "cmd_opt_types.h"
 #include "sequence_types.h"
@@ -22,15 +23,17 @@ sequence_t new_sequence(cmd_options_t options) {
    sequence.sequence_length += options.nM7;
    sequence.sequence_length += options.nP8;
 
+   mpq_init(sequence.freq_scale);
+
    sequence.interval_sequence = (int*) malloc(sequence.sequence_length * sizeof(int));
    sequence.note_sequence = (note_t*) malloc((sequence.sequence_length+1)*sizeof(note_t));
 
    return sequence;
 }
 
-void store_sequence(frac_t freq_scale, double freq_scale_diff, int halfstep_shift,
+void store_sequence(mpq_t freq_scale, double freq_scale_diff, int halfstep_shift,
                     interval_t *interval_list, sequence_t *sequence) {
-   sequence->freq_scale = freq_scale;
+   mpq_set(sequence->freq_scale, freq_scale);
    sequence->freq_scale_diff = freq_scale_diff;
    sequence->halfstep_shift = halfstep_shift;
    sequence->sequence_length = 0;
@@ -80,6 +83,7 @@ void generate_note_sequence(sequence_t *sequence_ptr, cmd_options_t options) {
 }
 
 void free_sequence(sequence_t sequence) {
+   mpq_clear(sequence.freq_scale);
    free(sequence.intervalpows);
    free(sequence.interval_sequence);
    free(sequence.note_sequence);

@@ -1,7 +1,7 @@
 #ifndef INTERVAL_TYPES_H
 #define INTERVAL_TYPES_H
 
-#include "frac_types.h"
+#include <gmp.h>
 
 enum interval_ID_e {
    P1,
@@ -18,7 +18,7 @@ typedef struct {
    char *name;
    enum interval_ID_e ID;
    int ht_steps;
-   frac_t freqscale;
+   mpq_t freqscale;
    int minpow;
    int maxpow;
    int pow;

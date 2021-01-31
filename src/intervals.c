@@ -3,8 +3,6 @@
 
 #include "interval_types.h"
 #include "cmd_opt_types.h"
-#include "frac_types.h"
-#include "fractions.h"
 
 const int nintervals = 12;
 
@@ -14,84 +12,96 @@ interval_t *new_interval_list(cmd_options_t options) {
    interval_list[0].name = "unison";
    interval_list[0].ID = P1;
    interval_list[0].ht_steps = 0;
-   interval_list[0].freqscale = frac_new(1, 1);
+   mpq_init(interval_list[0].freqscale);
+   mpq_set_si(interval_list[0].freqscale, 1, 1);
    interval_list[0].maxpow = options.nP1;
    interval_list[0].pow = -interval_list[0].maxpow;
 
    interval_list[1].name = "minor second";
    interval_list[1].ID = m2;
    interval_list[1].ht_steps = 1;
-   interval_list[1].freqscale = frac_new(16, 15);
+   mpq_init(interval_list[1].freqscale);
+   mpq_set_si(interval_list[1].freqscale, 16, 15);
    interval_list[1].maxpow = options.nm2;
    interval_list[1].pow = -interval_list[1].maxpow;
 
    interval_list[2].name = "major second";
    interval_list[2].ID = M2;
    interval_list[2].ht_steps = 2;
-   interval_list[2].freqscale = frac_new(9, 8);
+   mpq_init(interval_list[2].freqscale);
+   mpq_set_si(interval_list[2].freqscale, 9, 8);
    interval_list[2].maxpow = options.nM2;
    interval_list[2].pow = -interval_list[2].maxpow;
 
    interval_list[3].name = "minor third";
    interval_list[3].ID = m3;
    interval_list[3].ht_steps = 3;
-   interval_list[3].freqscale = frac_new(6, 5);
+   mpq_init(interval_list[3].freqscale);
+   mpq_set_si(interval_list[3].freqscale, 6, 5);
    interval_list[3].maxpow = options.nm3;
    interval_list[3].pow = -interval_list[3].maxpow;
 
    interval_list[4].name = "major third";
    interval_list[4].ID = M3;
    interval_list[4].ht_steps = 4;
-   interval_list[4].freqscale = frac_new(5, 4);
+   mpq_init(interval_list[4].freqscale);
+   mpq_set_si(interval_list[4].freqscale, 5, 4);
    interval_list[4].maxpow = options.nM3;
    interval_list[4].pow = -interval_list[4].maxpow;
 
    interval_list[5].name = "perfect fourth";
    interval_list[5].ID = P4;
    interval_list[5].ht_steps = 5;
-   interval_list[5].freqscale = frac_new(4, 3);
+   mpq_init(interval_list[5].freqscale);
+   mpq_set_si(interval_list[5].freqscale, 4, 3);
    interval_list[5].maxpow = options.nP4;
    interval_list[5].pow = -interval_list[5].maxpow;
 
    interval_list[6].name = "perfect fifth";
    interval_list[6].ID = P5;
    interval_list[6].ht_steps = 7;
-   interval_list[6].freqscale = frac_new(3, 2);
+   mpq_init(interval_list[6].freqscale);
+   mpq_set_si(interval_list[6].freqscale, 3, 2);
    interval_list[6].maxpow = options.nP5;
    interval_list[6].pow = -interval_list[6].maxpow;
 
    interval_list[7].name = "minor sixth";
    interval_list[7].ID = m6;
    interval_list[7].ht_steps = 8;
-   interval_list[7].freqscale = frac_new(8, 5);
+   mpq_init(interval_list[7].freqscale);
+   mpq_set_si(interval_list[7].freqscale, 8, 5);
    interval_list[7].maxpow = options.nm6;
    interval_list[7].pow = -interval_list[7].maxpow;
 
    interval_list[8].name = "major sixth";
    interval_list[8].ID = M6;
    interval_list[8].ht_steps = 9;
-   interval_list[8].freqscale = frac_new(5, 3);
+   mpq_init(interval_list[8].freqscale);
+   mpq_set_si(interval_list[8].freqscale, 5, 3);
    interval_list[8].maxpow = options.nM6;
    interval_list[8].pow = -interval_list[8].maxpow;
 
    interval_list[9].name = "minor seventh";
    interval_list[9].ID = m7;
    interval_list[9].ht_steps = 10;
-   interval_list[9].freqscale = frac_new(16, 9);
+   mpq_init(interval_list[9].freqscale);
+   mpq_set_si(interval_list[9].freqscale, 16, 9);
    interval_list[9].maxpow = options.nm7;
    interval_list[9].pow = -interval_list[9].maxpow;
 
    interval_list[10].name = "major seventh";
    interval_list[10].ID = M7;
    interval_list[10].ht_steps = 11;
-   interval_list[10].freqscale = frac_new(15, 8);
+   mpq_init(interval_list[10].freqscale);
+   mpq_set_si(interval_list[10].freqscale, 15, 8);
    interval_list[10].maxpow = options.nM7;
    interval_list[10].pow = -interval_list[10].maxpow;
 
    interval_list[11].name = "perfect octave";
    interval_list[11].ID = P8;
    interval_list[11].ht_steps = 12;
-   interval_list[11].freqscale = frac_new(2, 1);
+   mpq_init(interval_list[11].freqscale);
+   mpq_set_si(interval_list[11].freqscale, 2, 1);
    interval_list[11].maxpow = options.nP8;
    interval_list[11].pow = -interval_list[11].maxpow;
 
@@ -139,6 +149,10 @@ void next_interval_list(interval_t *interval_list) {
 
 void free_interval_list(interval_t **interval_list_ptr) {
    interval_t *interval_list = *interval_list_ptr;
+   // free the gmp fractions
+   for (int i=0; i<nintervals; i++) {
+      mpq_clear(interval_list[i].freqscale);
+   }
    free(interval_list);
    interval_list = NULL;
 }
