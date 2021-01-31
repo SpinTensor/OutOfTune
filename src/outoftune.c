@@ -49,7 +49,6 @@ int main(int argc, char **argv) {
    printf("Checking %lld possible interval combinations\n", total_interval_lists(interval_list));
 
    sequence_t sequence = new_sequence(options);
-
    // store best metrics
    double best_freq_scale_diff = INT_MAX;
    best_freq_scale_diff = (best_freq_scale_diff < 0) ? -best_freq_scale_diff : best_freq_scale_diff;
@@ -71,46 +70,48 @@ int main(int argc, char **argv) {
                            halfstep_shift,
                            interval_list,
                            &sequence);
+            if (sequence.sequence_length > 1) {
 
-            optimize_sequence(&sequence, options);
+               optimize_sequence(&sequence, options);
 
-            generate_note_sequence(&sequence, options);
+               generate_note_sequence(&sequence, options);
 
-            if (sequence.score == 0) {
+               if (sequence.score == 0) {
 
-               printf("%16lld:", i);
-               for (int iint=0; iint<nintervals; iint++) {
-                  printf(" %4d", interval_list[iint].pow);
-               }
-
-               printf(" (shift = %d, scale = %le (%le cents)",
-                      halfstep_shift,
-                      mpq_get_d(freq_scale),
-                      1200.0 * log(mpq_get_d(freq_scale))/ log(2.0));
-
-               for (int i=0; i<sequence.sequence_length; i++) {
-                  if (i%12 == 0) {
-                     printf("\n                 ");
+                  printf("%16lld:", i);
+                  for (int iint=0; iint<nintervals; iint++) {
+                     printf(" %4d", interval_list[iint].pow);
                   }
-                  printf(" %4d", sequence.interval_sequence[i]);
-               }
 
-               for (int i=0; i<sequence.sequence_length+1; i++) {
-                  if (i%8 == 0) {
-                     printf("\n                 ");
+                  printf(" (shift = %d, scale = %le (%le cents)",
+                         halfstep_shift,
+                         mpq_get_d(freq_scale),
+                         1200.0 * log(mpq_get_d(freq_scale))/ log(2.0));
+
+                  for (int i=0; i<sequence.sequence_length; i++) {
+                     if (i%12 == 0) {
+                        printf("\n                 ");
+                     }
+                     printf(" %4d", sequence.interval_sequence[i]);
                   }
-                  printf(" %s", sequence.note_sequence[i].name);
-                  if (strlen(sequence.note_sequence[i].name) == 1) {
-                     printf(" ");
+
+                  for (int i=0; i<sequence.sequence_length+1; i++) {
+                     if (i%8 == 0) {
+                        printf("\n                 ");
+                     }
+                     printf(" %s", sequence.note_sequence[i].name);
+                     if (strlen(sequence.note_sequence[i].name) == 1) {
+                        printf(" ");
+                     }
+                     printf("(%2d) ", sequence.note_sequence[i].octave);
                   }
-                  printf("(%2d) ", sequence.note_sequence[i].octave);
+                  printf("\n                  ");
+                  printf("maxhstepsup = %d, maxhstepsdown = %d, avoidviolations = %d, score = %d\n\n",
+                         sequence.maxhstepsup,
+                         sequence.maxhstepsdown,
+                         sequence.avoidviolations,
+                         sequence.score);
                }
-               printf("\n                  ");
-               printf("maxhstepsup = %d, maxhstepsdown = %d, avoidviolations = %d, score = %d\n\n",
-                      sequence.maxhstepsup,
-                      sequence.maxhstepsdown,
-                      sequence.avoidviolations,
-                      sequence.score);
             }
          }
       }
