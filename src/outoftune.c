@@ -52,14 +52,13 @@ int main(int argc, char **argv) {
    // store best metrics
    double best_freq_scale_diff = INT_MAX;
    best_freq_scale_diff = (best_freq_scale_diff < 0) ? -best_freq_scale_diff : best_freq_scale_diff;
-
    // go through all 
    for (long long i=0; i<total_interval_lists(interval_list); i++) {
       int halfstep_shift = interval_list_halfstep_shift(interval_list);
       if (halfstep_shift == options.target_halfstep_shift) {
 
          interval_list_freq_scale(interval_list, &freq_scale);
-         double freq_scale_diff = options.target_frequency_scale - mpq_get_d(freq_scale);
+         double freq_scale_diff = mpq_get_d(freq_scale) / options.target_frequency_scale - 1.0;
          freq_scale_diff = (freq_scale_diff < 0) ? -freq_scale_diff : freq_scale_diff;
 
          if (freq_scale_diff <= best_freq_scale_diff) {
