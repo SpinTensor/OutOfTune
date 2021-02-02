@@ -111,6 +111,12 @@ int main(int argc, char **argv) {
                          sequence.avoidviolations,
                          sequence.score,
                          sequence.sequence_length);
+                  fflush(stdout);
+               } else {
+                  fprintf(stderr,
+                          "%lld: Failed sequence score = %d\n",
+                          i,
+                          sequence.score);
                }
             }
          }
