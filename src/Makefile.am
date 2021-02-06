@@ -18,7 +18,8 @@ outoftune_LDADD = libsequence.la \
 librandom_la_SOURCES = random.c
 librandom_la_CFLAGS = -O3
 
-libperm_la_SOURCES = permutations.c
+libperm_la_SOURCES = permutations.c \
+		     in_list.c
 libperm_la_CFLAGS = -O3
 
 libcmd_opt_la_SOURCES = cmd_options.c

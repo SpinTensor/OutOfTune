@@ -75,7 +75,9 @@ int main(int argc, char **argv) {
 
                generate_note_sequence(&sequence, options);
 
-               if (sequence.score == 0) {
+               if (sequence.maxhstepsup < options.maxhstepsup &&
+                   sequence.maxhstepsdown < options.maxhstepsdown &&
+                   sequence.avoidviolations == 0) {
 
                   printf("%16lld:", i);
                   for (int iint=0; iint<nintervals; iint++) {
@@ -105,18 +107,12 @@ int main(int argc, char **argv) {
                      printf("(%2d) ", sequence.note_sequence[i].octave);
                   }
                   printf("\n                  ");
-                  printf("maxhstepsup = %d, maxhstepsdown = %d, avoidviolations = %d, score = %d, length = %d\n\n",
+                  printf("maxhstepsup = %d, maxhstepsdown = %d, avoidviolations = %d, length = %d\n\n",
                          sequence.maxhstepsup,
                          sequence.maxhstepsdown,
                          sequence.avoidviolations,
-                         sequence.score,
                          sequence.sequence_length);
                   fflush(stdout);
-               } else {
-                  fprintf(stderr,
-                          "%lld: Failed sequence score = %d\n",
-                          i,
-                          sequence.score);
                }
             }
          }

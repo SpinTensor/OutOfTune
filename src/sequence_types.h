@@ -20,7 +20,6 @@ typedef struct {
    int maxhstepsup;
    int maxhstepsdown;
    int avoidviolations;
-   int score;
 } sequence_t;
 
 #endif
