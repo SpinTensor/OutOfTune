@@ -47,8 +47,16 @@ int main(int argc, char **argv) {
    // store best metrics
    double best_freq_scale_diff = INT_MAX;
    best_freq_scale_diff = (best_freq_scale_diff < 0) ? -best_freq_scale_diff : best_freq_scale_diff;
+   double next_percentage = 0.0;
+   double percentage_interval = 0.01;
+
    // go through all possibilities
-   for (long long i=0; i<total_interval_lists(interval_list); i++) {
+   long long n_interval_list_perms = total_interval_lists(interval_list);
+   for (long long i=0; i<n_interval_list_perms; i++) {
+      while (100.0 * ((double) i) / ((double) n_interval_list_perms) >= next_percentage) {
+         fprintf(stderr, "Searched %6.2f%%\n", next_percentage);
+         next_percentage += percentage_interval;
+      }
       int halfstep_shift = interval_list_halfstep_shift(interval_list);
       if (halfstep_shift == options.target_halfstep_shift) {
 
