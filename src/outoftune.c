@@ -83,7 +83,7 @@ int main(int argc, char **argv) {
                   printf(" %4d", interval_list[iint].pow);
                }
 
-               printf(" (shift = %d, scale = %le (%le cents)",
+               printf(" (shift = %d, scale = %24.20lf (%le cents)",
                       halfstep_shift,
                       mpq_get_d(freq_scale)/options.target_frequency_scale,
                       1200.0 * log(mpq_get_d(freq_scale)/options.target_frequency_scale)/ log(2.0));
