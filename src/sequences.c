@@ -9,6 +9,7 @@
 
 sequence_t new_sequence(cmd_options_t options) {
    sequence_t sequence;
+   sequence.nintervalpows = nintervals;
    sequence.intervalpows = (int*) malloc(nintervals * sizeof(int));
    sequence.sequence_length =  options.nP1;
    sequence.sequence_length += options.nm2;

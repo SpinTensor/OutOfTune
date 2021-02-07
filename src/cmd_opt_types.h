@@ -20,11 +20,8 @@ typedef struct {
    int startingOctave; // octave in which to start the sequence
    int maxhstepsdown; // allowed number of halfsteps down from the starting note
    int maxhstepsup; // allowed number of halfsteps up from the starting note
-   int navoidhsteps; // number of halfsteps to avoid in sequence generation
-   int *avoidhsteps; // halfsteps to avoid in sequence generation
    double target_frequency_scale; // target frequency scale to be reached after sequence
    int target_halfstep_shift; // target half step shift to be reached after sequence
-   long long nsequence_opt_steps; // number of steps to attempt to optimize sequence
 } cmd_options_t;
 
 enum cmd_opt_IDs {
@@ -44,11 +41,8 @@ enum cmd_opt_IDs {
    startingOctaveID, // octave in which to start the sequence
    maxhstepsdown_ID, // allowed number of halfsteps down from the starting note
    maxhstepsup_ID, // allowed number of halfsteps up from the starting note
-   navoidhsteps_ID, // number of halfsteps to avoid in sequence generation
-   avoidhsteps_ID, // halfsteps to avoid in sequence generation
    target_frequency_scale_ID, // target frequency scale to be reached after sequence
    target_halfstep_shift_ID, // target half step shift to be reached after sequence
-   nsequence_opt_steps_ID // number of steps to attempt to optimize sequence
 };
 
 #endif

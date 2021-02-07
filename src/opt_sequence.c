@@ -18,8 +18,7 @@ void optimize_sequence(sequence_t *sequence_ptr, cmd_options_t options) {
       sum += sequence_ptr->interval_sequence[i];
       swap_elements(sequence_ptr->interval_sequence, ielem, i);
    }
-   sequence_properties(sequence_ptr, options,
+   sequence_properties(sequence_ptr,
                        &(sequence_ptr->maxhstepsup),
-                       &(sequence_ptr->maxhstepsdown),
-                       &(sequence_ptr->avoidviolations));
+                       &(sequence_ptr->maxhstepsdown));
 }

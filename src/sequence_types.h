@@ -19,7 +19,6 @@ typedef struct {
    note_t *note_sequence;
    int maxhstepsup;
    int maxhstepsdown;
-   int avoidviolations;
 } sequence_t;
 
 #endif

@@ -35,13 +35,8 @@ int main(int argc, char **argv) {
    printf("   startingOctave = %d\n", options.startingOctave); // octave in which to start the sequence
    printf("   maxhstepsdown = %d\n", options.maxhstepsdown); // allowed number of halfsteps down from the starting note
    printf("   maxhstepsup = %d\n", options.maxhstepsup); // allowed number of halfsteps up from the starting note
-   printf("   navoidhsteps = %d\n", options.navoidhsteps); // number of halfsteps to avoid in sequence generation
-   for (int i=0; i<options.navoidhsteps; i++) {
-      printf("      avoidhsteps[%d] = %d\n", i, options.avoidhsteps[i]); // halfsteps to avoid in sequence generation
-   }
    printf("   target_frequency_scale = %lf\n", options.target_frequency_scale); // target frequency scale to be reached after sequence
    printf("   target_halfstep_shift = %d\n", options.target_halfstep_shift); // target half step shift to be reached after sequence
-   printf("   nseq_opt_steps = %lld\n", options.nsequence_opt_steps); // number of optimization steps for sequence optimization
    interval_t *interval_list = new_interval_list(options);
    mpq_t freq_scale;
 
@@ -52,7 +47,7 @@ int main(int argc, char **argv) {
    // store best metrics
    double best_freq_scale_diff = INT_MAX;
    best_freq_scale_diff = (best_freq_scale_diff < 0) ? -best_freq_scale_diff : best_freq_scale_diff;
-   // go through all 
+   // go through all possibilities
    for (long long i=0; i<total_interval_lists(interval_list); i++) {
       int halfstep_shift = interval_list_halfstep_shift(interval_list);
       if (halfstep_shift == options.target_halfstep_shift) {
@@ -62,7 +57,6 @@ int main(int argc, char **argv) {
          freq_scale_diff = (freq_scale_diff < 0) ? -freq_scale_diff : freq_scale_diff;
 
          if (freq_scale_diff <= best_freq_scale_diff) {
-            best_freq_scale_diff = freq_scale_diff;
 
             store_sequence(freq_scale,
                            freq_scale_diff,
@@ -70,50 +64,45 @@ int main(int argc, char **argv) {
                            interval_list,
                            &sequence);
             if (sequence.sequence_length > 1) {
+               best_freq_scale_diff = freq_scale_diff;
 
                optimize_sequence(&sequence, options);
 
                generate_note_sequence(&sequence, options);
 
-               if (sequence.maxhstepsup < options.maxhstepsup &&
-                   sequence.maxhstepsdown < options.maxhstepsdown &&
-                   sequence.avoidviolations == 0) {
-
-                  printf("%16lld:", i);
-                  for (int iint=0; iint<nintervals; iint++) {
-                     printf(" %4d", interval_list[iint].pow);
-                  }
-
-                  printf(" (shift = %d, scale = %le (%le cents)",
-                         halfstep_shift,
-                         mpq_get_d(freq_scale),
-                         1200.0 * log(mpq_get_d(freq_scale))/ log(2.0));
-
-                  for (int i=0; i<sequence.sequence_length; i++) {
-                     if (i%12 == 0) {
-                        printf("\n                 ");
-                     }
-                     printf(" %4d", sequence.interval_sequence[i]);
-                  }
-
-                  for (int i=0; i<sequence.sequence_length+1; i++) {
-                     if (i%8 == 0) {
-                        printf("\n                 ");
-                     }
-                     printf(" %s", sequence.note_sequence[i].name);
-                     if (strlen(sequence.note_sequence[i].name) == 1) {
-                        printf(" ");
-                     }
-                     printf("(%2d) ", sequence.note_sequence[i].octave);
-                  }
-                  printf("\n                  ");
-                  printf("maxhstepsup = %d, maxhstepsdown = %d, avoidviolations = %d, length = %d\n\n",
-                         sequence.maxhstepsup,
-                         sequence.maxhstepsdown,
-                         sequence.avoidviolations,
-                         sequence.sequence_length);
-                  fflush(stdout);
+               printf("%16lld:", i);
+               for (int iint=0; iint<nintervals; iint++) {
+                  printf(" %4d", interval_list[iint].pow);
                }
+
+               printf(" (shift = %d, scale = %le (%le cents)",
+                      halfstep_shift,
+                      mpq_get_d(freq_scale)/options.target_frequency_scale,
+                      1200.0 * log(mpq_get_d(freq_scale)/options.target_frequency_scale)/ log(2.0));
+
+               for (int i=0; i<sequence.sequence_length; i++) {
+                  if (i%12 == 0) {
+                     printf("\n                 ");
+                  }
+                  printf(" %4d", sequence.interval_sequence[i]);
+               }
+
+               for (int i=0; i<sequence.sequence_length+1; i++) {
+                  if (i%8 == 0) {
+                     printf("\n                 ");
+                  }
+                  printf(" %s", sequence.note_sequence[i].name);
+                  if (strlen(sequence.note_sequence[i].name) == 1) {
+                     printf(" ");
+                  }
+                  printf("(%2d) ", sequence.note_sequence[i].octave);
+               }
+               printf("\n                  ");
+               printf("maxhstepsup = %d, maxhstepsdown = %d, length = %d\n\n",
+                      sequence.maxhstepsup,
+                      sequence.maxhstepsdown,
+                      sequence.sequence_length);
+               fflush(stdout);
             }
          }
       }
@@ -123,6 +112,5 @@ int main(int argc, char **argv) {
    mpq_clear(freq_scale);
    free_sequence(sequence);
    free_interval_list(&interval_list);
-   free_cmd_options(&options);
    return 0;
 }

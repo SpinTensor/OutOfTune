@@ -131,13 +131,6 @@ static struct argp_option possible_options[] = {
       "limit the number of halfsteps the sequence can go down from the starting note",
       0
    }, {
-      "avoid-hsteps",
-      avoidhsteps_ID,
-      "n,m",
-      0,
-      "komma separated list of halfsteps to avoid in the sequence generation",
-      0
-   }, {
       "target-freq-scale",
       target_frequency_scale_ID,
       "c",
@@ -152,14 +145,8 @@ static struct argp_option possible_options[] = {
       "number of halfsteps to be off relative to starting note after sequence",
       0
    }, {
-      "nseq_opt_steps",
-      nsequence_opt_steps_ID,
-      "n",
-      0,
-      "number of steps trying to optimize the resulting sequence",
-      0
-   }, {
-      0, 0, 0, 0, 0, 0}
+      0, 0, 0, 0, 0, 0
+   }
 };
 
 // Option parsing function
@@ -207,28 +194,6 @@ static error_t parse_cmd_options(int key, char *arg, struct argp_state *state) {
          options->nP8 = atoi(arg);
          break;
       // other options
-      case avoidhsteps_ID:;
-         // first count the elements
-         char *delimstr = ",";
-         char *tmpstr = strdup(arg);
-         char *token = strtok(tmpstr, delimstr);
-         options->navoidhsteps = 0;
-         while (token != NULL) {
-            token = strtok(NULL, delimstr);
-            options->navoidhsteps += 1;
-         }
-         // get the numbers
-         options->avoidhsteps = (int*) malloc(options->navoidhsteps*sizeof(int));
-         strcpy(tmpstr, arg);
-         token = strtok(tmpstr, delimstr);
-         int i=0;
-         while (token != NULL) {
-            options->avoidhsteps[i] = atoi(token);
-            token = strtok(NULL, delimstr);
-            i++;
-         }
-         free(tmpstr);
-         break;
       case maxhstepsdown_ID:
          options->maxhstepsdown = atoi(arg);
          break;
@@ -263,9 +228,6 @@ static error_t parse_cmd_options(int key, char *arg, struct argp_state *state) {
          break;
       case startingOctaveID:
          options->startingOctave = atoi(arg);
-         break;
-      case nsequence_opt_steps_ID:
-         options->nsequence_opt_steps = atoi(arg);
          break;
       case ARGP_KEY_ARG:
          if (state->arg_num > 0) {
@@ -307,8 +269,6 @@ cmd_options_t parse_command_line_options(int argc, char **argv) {
    options.startingOctave = 3; // octave on which to start the sequence
    options.maxhstepsdown = INT_MAX; // allowed number of halfsteps down from the starting note
    options.maxhstepsup = INT_MAX; // allowed number of halfsteps up from the starting note
-   options.navoidhsteps = 0; // number of halfsteps to avoid in sequence generation
-   options.avoidhsteps = NULL; // halfsteps to avoid in sequence generation
    options.target_frequency_scale = 1.0; // target frequency scale to be reached after sequence
    options.target_halfstep_shift = 0; // target half step shift to be reached after sequence
 
@@ -317,9 +277,4 @@ cmd_options_t parse_command_line_options(int argc, char **argv) {
 
    return options;
 
-}
-
-void free_cmd_options(cmd_options_t *options) {
-   free(options->avoidhsteps);
-   options->avoidhsteps = NULL;
 }
