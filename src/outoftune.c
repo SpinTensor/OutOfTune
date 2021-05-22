@@ -13,8 +13,6 @@
 #include "opt_sequence.h"
 
 int main(int argc, char **argv) {
-   (void) argc;
-   (void) argv;
 
    cmd_options_t options = parse_command_line_options(argc, argv);
 
